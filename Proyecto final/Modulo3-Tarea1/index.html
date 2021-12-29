@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css">
+    <title>Convertidor de Money-Modulo3</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Convertidor de moneda</h1>
+
+        <div class="cuadro">
+            <table>
+                <div>
+                    <form action="select" class="conversor" id="form">
+                        <div class="valorIni">
+                            <input type="text" name="dinero" placeholder="elige tu moneda">
+                        </div>
+                        <div class="opctionMoney">
+                            <select name="ingresoDivisa" id="ingresoDivisa" placeholder="Elige tu moneda"></select>
+                            <select name="salidaDivisa" id="salidaDivisa" placeholder="Elige tu moneda"></select>
+                        </div>
+                        <div class="buttonConvert">
+                            <button type="submit">Convertir</button>
+                        </div>
+                        <div class="salidaResultado">
+                            <input type="text" class="resultado" id="resultado" placeholder="Conversión" readonly>
+                        </div>
+                    </form>
+
+                </div>
+
+            </table>
+        </div>
+
+    </div>
+    
+    <script src="./script/script.js"></script>
+</body>
+</html>

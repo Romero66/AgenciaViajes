@@ -1,0 +1,57 @@
+* {
+    padding: 0;
+
+}
+
+body {
+    height: 60%;
+    background: rgb(rgb(218, 116, 116), rgb(9, 65, 9), rgb(67, 67, 245));
+    display: flex;
+    padding: 0 20px;
+    background-image: url(../images/fondo.jpg);
+    background-repeat: no-repeat;
+}
+img {
+    width: 10%;
+    border-radius: 50px;
+
+}
+
+#menuNav {
+    /* display: none; */
+    margin-left: auto;
+    color: beige;
+    line-height: 60px;
+    font-size: 20px;
+    cursor: pointer;
+
+}
+
+#menuNav ul {
+    display: inline-block;
+    margin-left: auto;
+
+}
+#menuNav ul li {
+    display: inline-block;
+}
+
+#menuNav ul li a{
+    display: inline-block;
+    position:static;
+    color: black;
+    text-decoration: none;
+    line-height:normal ;
+
+    font-size: 22px;
+    color: #777;
+    text-decoration: none;
+    transition: all 0.45s;
+
+}
+
+.textico {
+    text-align:left;
+    
+}
+
