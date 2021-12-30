@@ -7,108 +7,153 @@ Taller primera entrega Divisas
 
 
 // Primer paso inicializar las Variables a usar. 
-
-// let moneda;
-// let myList;
-// let myOtherList;
-// let resultadoEl;
-// // let fragmentIn = 0;
-// // let fragmentOut = 0;
-// let convertir;
-// let loginForm;
-// const valorMonedasEnDolar;
-
-// Aplicacion de funcionalidades 
-
-let fragmentIn  = document.createDocumentFragment();
-let fragmentOut = document.createDocumentFragment();
-let myList = document.getElementById('ingresoDivisa');
-let myOtherList = document.getElementById('salidaDivisa');
-let resultadoEl = document.getElementById('resultado');
-
+let fragmenIngreso  = document.createDocumentFragment();
+let fragmenSalida = document.createDocumentFragment();
+let opcionDivisasUno = document.getElementById('primerOpcion');
+let opcionDivisasDos = document.getElementById('segundaOpcion');
+let resultadoDivisa = document.getElementById('resultado');
 // Se aplica funcion Array para almacena el tipo de moneda y su valor
 
 let  moneda = ['Elige tu Moneda','Dolar','Peso Mexicano','Peso Colombiano','Euro','Libra Esterlina'];
-const valorMonedasEnDolar = [0, 1, 20.535, 3784.89, 0.86098, 0.73613];
+// Valores de cada tipo de moneda con  su respetivo valor
+const valorMonedasEnDolar = [0, 1, 20.59, 4014.18, 0.88, 0.74];
+const valorMonedaEnMex = [0, 0.04, 1, 194.86, 0.04, 0.03]; 
+const valorMonedaEnCop =[0, 0.0003, 0.0052, 1, 0.0002, 0.00019];
+const valorMonedaEnEur = [0, 1.13, 23.34, 4583.43, 1, 0.84];
+const valorMonedaEnGbp = [0, 1.34, 27.76, 5449.49, 1];
 
 
-// para recorrer el Array se hara uso del forEach para recorrerlo los datos de Ingreso 
+// Ojo con esto se hace Uso del ForEach para recorrer la primera opcion de divisa
 moneda.forEach(element => {
-    let optionIn = document.createElement('Option');
-    optionIn.textContent = element;
-    fragmentIn.appendChild(optionIn);
+    let optionInreso = document.createElement('Option');
+    optionInreso.textContent = element;
+    fragmenIngreso.appendChild(optionInreso);
     
-    // para recorrer el Array se hara uso del forEach para recorrerlo los datos de Salida
+    // Ojo con esto se hace Uso del ForEach para recorrer la segunda opcion de divisa
 
-    let optionOut = document.createElement('Option');
-    optionOut.textContent = element;
-    fragmentOut.appendChild(optionOut);
+    let optionSalida = document.createElement('Option');
+    optionSalida.textContent = element;
+    fragmenSalida.appendChild(optionSalida);
 });
 
-myList.appendChild(fragmentIn)
-myOtherList.appendChild(fragmentOut);
 
+opcionDivisasUno.appendChild(fragmenIngreso);
+opcionDivisasDos.appendChild(fragmenSalida);
 
-// creacion variable ElementId del buttom
-
+//declaro variables y utilizo el botón convertir
 let convertir = document.getElementById('convierte');
-let loginForm = document.getElementById('form');
-loginForm.addEventListener("submit", cancelIdleCallback);
 
+let loginForm = document.getElementById('form');
+loginForm.addEventListener("submit", calcularConversion);
 
 // Creacion de las funciones
 
 function calcularConversion(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    letformData = new FormData(e.target);
-    let formValues = Object.fromEntries(formdata);
-    let cantidad = parseFloat(formValues.dinero); // duda aca
-    let ingresoDivisa = formValues.ingresoDivisa;
-    let salidaDivisa = formValues.salidaDivisa;
+  let formData = new FormData(e.target);
+  let formValues = Object.fromEntries(formData);
+  let cantidad = parseFloat(formValues.dinero);
+  let primerOpcion = formValues.primerOpcion;
+  let segundaOpcion = formValues.segundaOpcion;
 
-if(isNaN(cantidad) == true) {
-    resultadoEl.setAttribute('value', "La cantidad no es valida");
-    resultadoEl.setAttribute('style', "background-clor: red;");
-
-} else {
-    if(chequearDivisa(ingresoDivisa) && chequearDivisa(salidaDivisa)) {
-        const resultado = convertirDivisa(cantidad, ingresoDivisa, salidaDivisa);
-        resultadoEl.setAttribute('value', resultado);
-        resultadoEl.setAttribute('style', "background-color: white;");
-
+//anuncia si ingresó  letras y genera una alerta y mensaje del fallo
+  if (isNaN(cantidad) == true) {
+    resultadoDivisa.setAttribute('value', "El valor ingresado no es Valido");
+    resultadoDivisa.setAttribute(alert(" !!!! Accion Erronea Intentar de nuevo ¡¡¡¡"));
+  } else {
+    if (chequearDivisa(primerOpcion) && chequearDivisa(segundaOpcion)) {
+      const resultado = convertirDivisa(cantidad, primerOpcion, segundaOpcion);
+      resultadoDivisa.setAttribute('value', resultado);   // imprime el valor final 
+      
     } else {
-        return;
+      return;
     }
+  }
 }
 
-}
-
-// funcion para revisar tipo de divisa seleccionada
-
+//función que se asegura de que se eliga una divisa y genera aviso del error
 function chequearDivisa(divisa) {
-    if(divisa == moneda[0]) {
-        alert("Elige una divisa valida");
-        return false;
-
-    }
-    return true;
-
+  if (divisa == moneda[0]) {
+    alert('Elige una divisa válida');
+    return false;
+  }
+  return true;
 }
 
-// secioon de conversiones de monedas
-function convertirDivisa(cantidad, ingresoDivisa, salidaDivisa) {
-    switch (ingresoDivisa) {
-        case monedas[1]:
-            if(salidaDivisa === moneda[1])
-               return cantidad;
-            else if(salidaDivisa === moneda[2])
-                return cantidad * valorMonedasEnDolar[2];
-            else if (salidaDivisa === moneda[3])
-                return cantidad * valorMonedasEnDolar[3];
-            else if(salidaDivisa === moneda[4])
-                return cantidad * valorMonedasEnDolar;
-            else if(salidaDivisa === moneda[5])
-                return cantidad * valorMonedasEnDolar;
-    }
+//conversiones
+function convertirDivisa(cantidad, primerOpcion, segundaOpcion) {
+
+    switch (primerOpcion) {
+        // Ingreso dolar
+        case moneda[1]:
+          if (segundaOpcion === moneda[1])
+            return cantidad;
+          else if (segundaOpcion === moneda[2])
+            return cantidad * valorMonedasEnDolar[2];
+          else if (segundaOpcion === moneda[3])
+            return cantidad * valorMonedasEnDolar[3];
+          else if (segundaOpcion === moneda[4])
+            return cantidad * valorMonedasEnDolar[4];
+          else if (segundaOpcion === moneda[5])
+            return cantidad * valorMonedasEnDolar[5];
+    
+          // Ingreso operacion para moneda Mexicana
+        case moneda[2]:
+          if (segundaOpcion === moneda[1])  //1
+            return cantidad * valorMonedaEnMex[1];
+          else if (segundaOpcion === moneda[2])  //2
+            return cantidad;
+          else if (segundaOpcion === moneda[3]) //3
+            return cantidad * valorMonedaEnMex[3];
+          else if (segundaOpcion === moneda[4])  //4
+            return cantidad * valorMonedaEnMex[4];
+          else if (segundaOpcion === moneda[5]) //5
+            return cantidad * valorMonedaEnMex[5];
+
+        // Ingreso operacion para moneda Colombiana
+
+        case moneda[3]:
+          if (segundaOpcion === moneda[1]) //1
+            return cantidad * valorMonedaEnCop[1];
+          else if (segundaOpcion === moneda[2]) //2
+            return cantidad * valorMonedaEnCop[2];
+          else if (segundaOpcion === moneda[3]) //3
+            return cantidad; 
+          else if (segundaOpcion === moneda[4]) //4
+            return cantidad * valorMonedaEnCop[4];
+          else if (segundaOpcion === moneda[5]) //5
+            return cantidad * valorMonedaEnCop[5];
+
+        // Ingreso operacion para el Euro
+
+        case moneda[4]:
+          if (segundaOpcion === moneda[1]) //1
+            return cantidad * valorMonedaEnEur[1];
+          else if (segundaOpcion === moneda[2]) //2
+            return cantidad * valorMonedaEnEur[2];
+          else if (segundaOpcion === moneda[3]) //3
+            return cantidad * valorMonedaEnEur[3];
+          else if (segundaOpcion === moneda[4]) //4
+            return cantidad;
+          else if (segundaOpcion === moneda[5]) //5
+            return cantidad * valorMonedaEnEur[5];
+        
+
+        // Ingreso operacion para la Libra Esterlina
+
+        case moneda[5]:
+          if (segundaOpcion === moneda[1]) //1
+            return cantidad * valorMonedaEnGbp[1];
+          else if (segundaOpcion === moneda[2]) //2
+            return cantidad * valorMonedaEnGbp[2];
+          else if (segundaOpcion === moneda[3]) //3
+            return cantidad * valorMonedaEnGbp[3];
+          else if (segundaOpcion === moneda[4]) //4
+            return cantidad * valorMonedaEnGbp[4];
+          else if (segundaOpcion === moneda[5]) //5
+            return cantidad;
+            
+      }
 }
+

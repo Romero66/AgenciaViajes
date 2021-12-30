@@ -10,23 +10,28 @@
 <body>
     <div class="container">
         <h1>Convertidor de moneda</h1>
+    
 
         <div class="cuadro">
             <table>
+                
                 <div>
                     <form action="select" class="conversor" id="form">
+                        <img id="logo" src="./images/logo.png" alt="">
                         <div class="valorIni">
-                            <input type="text" name="dinero" placeholder="elige tu moneda">
+                            <label for="">
+                                <input class="ingDato" type="text" name="dinero" placeholder="Cantidad de Dinero:">
+                            </label>
                         </div>
                         <div class="opctionMoney">
-                            <select name="ingresoDivisa" id="ingresoDivisa" placeholder="Elige tu moneda"></select>
-                            <select name="salidaDivisa" id="salidaDivisa" placeholder="Elige tu moneda"></select>
+                            <select name="primerOpcion" id="primerOpcion" placeholder="Elige tu moneda"></select>
+                            <select name="segundaOpcion" id="segundaOpcion" placeholder="Elige tu moneda"></select>
                         </div>
                         <div class="buttonConvert">
-                            <button type="submit">Convertir</button>
+                            <button class="button" type="submit" onclick="calcularConversion()">Convertir</button>
                         </div>
                         <div class="salidaResultado">
-                            <input type="text" class="resultado" id="resultado" placeholder="Conversión" readonly>
+                            <input type="text" class="resultado" id="resultado"  placeholder="Validacion del Formulario" readonly>
                         </div>
                     </form>
 
